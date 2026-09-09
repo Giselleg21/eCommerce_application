@@ -1,0 +1,41 @@
+{% extends 'Shop/base.html' %}
+
+{% block header %}
+    Shopping Cart
+{% endblock header %}
+
+{% block content %}
+    {% if cart_items %}
+        <ul>
+            {% for item in cart_items %}
+                <li style="padding:10px">
+                    {{ item.product.name }}
+                    <br><br>
+                    - Quantity: {{ item.quantity }}
+                    <br><br>
+                    - Price: R{{ item.product.price }}
+                    <br><br>
+                    - Subtotal: R{% widthratio item.product.price 1 item.quantity %}
+                    <br><br>
+
+                    <a href="{% url 'remove_from_cart' item.product.id %}">
+                        Remove
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
+    {% if cart_items %}
+        <h2>Total: R{{ total }}</h2>
+
+        <a href="{% url 'checkout' %}">
+            <button type="button" class="btn-primary">Go to Checkout</button>
+        </a>
+    {% endif %}
+    
+    <br><br>
+    <a href="{% url 'product_list' %}">Continue Shopping</a>
+{% endblock content %}

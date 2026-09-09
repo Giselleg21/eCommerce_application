@@ -1,0 +1,33 @@
+{% extends 'Shop/base.html' %}
+
+{% block header %}
+    Add New Product
+{% endblock header %}
+
+{% block content %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <label for="store">Store:</label>
+        <select name="store" id="store" required>
+            {% for store in stores %}
+                <option value="{{ store.id }}">
+                    {{ store.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <a href="{% url 'store_list' %}">
+            <button type="submit" class="btn-secondary">Create Product</button>
+        </a>
+    </form>
+
+    <br><br>
+
+    <a href="{% url 'product_list' %}">Back to Products</a>
+{% endblock content %}

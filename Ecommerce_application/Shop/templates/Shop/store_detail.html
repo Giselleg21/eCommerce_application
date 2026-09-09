@@ -1,0 +1,42 @@
+{% extends 'Shop/base.html' %}
+
+{% block title %}
+    Stores
+{% endblock title %}
+
+{% block content %}
+    <h1>{{ store.name }}</h1>
+
+    <p><strong>Description:</strong></p>
+    <p>{{ store.description }}</p>
+
+    <p><strong>Vendor:</strong> {{ store.vendor.username }}</p>
+
+    <h2>Products</h2>
+
+    {% if store.product_set.all %}
+        <ul>
+            {% for product in store.product_set.all %}
+                <li style="padding:30px">
+                    <a href="{% url 'product_detail' product.id %}">
+                        {{ product.name }}
+                    </a>
+                    - R{{ product.price }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>This store has no products yet.</p>
+    {% endif %}
+    <a href="{% url 'product_create' %}">
+        <button type="button" class="btn-primary">Add Product</button>
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'store_list' %}">Back to Stores</a>
+    
+    <a href="{% url 'store_delete' store.id %}">Delete Store</a>
+</form>
+
+{% endblock content %}

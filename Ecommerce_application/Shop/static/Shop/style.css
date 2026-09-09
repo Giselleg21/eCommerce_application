@@ -1,0 +1,60 @@
+/*Shop/static/Shop/style.css */
+
+body {font-family:Verdana, Geneva, Tahoma, sans-serif;
+      background-color: rgb(243, 243, 235);
+      color: Black
+}
+
+header {
+    background-color: rgb(125, 188, 233);
+    color:black;
+    padding: 10px;
+    text-align: center;
+}
+
+a {
+    color: black;
+    font-weight: bold;
+    border: 2px solid;
+    text-decoration: none;
+    padding: 5px 10px;
+    display: inline-block;
+
+}
+
+a:hover {
+    color: rgb(125, 188, 233);
+    text-decoration: underline;
+}
+
+.row1 {
+    padding: 5px;
+    padding-bottom: 10px;
+    border: 20px; 
+}
+
+.btn-primary{
+    border: none;
+    color: rgb(125, 188, 233);
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.btn-primary:hover{
+    color: black
+}
+
+.btn-secondary{
+    border: 5px;
+    color: black;
+    font-weight: bolder;
+    font-size: 15px
+}
+
+.btn-secondary:hover{
+    color: rgb(125, 188, 233);
+}
+
+.store{
+    padding: 30px
+}

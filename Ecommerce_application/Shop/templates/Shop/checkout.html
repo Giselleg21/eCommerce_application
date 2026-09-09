@@ -1,0 +1,40 @@
+{% extends 'Shop/base.html' %}
+
+{% block header %}
+    Checkout
+{% endblock header %}
+
+{% block content %}
+    {% if cart_items %}
+
+        <h2>Order Summary</h2>
+
+        <ul>
+            {% for item in cart_items %}
+                <li>
+                    {{ item.product.name }}
+                    - Quantity: {{ item.quantity }}
+                    - Price: R{{ item.product.price }}
+                    - Subtotal: R{% widthratio item.product.price 1 item.quantity %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Total: R{{ total }}</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn-primary">Place Order</button>
+        </form>
+
+    {% else %}
+
+        <p>Your cart is empty.</p>
+
+    {% endif %}
+
+    <br><br>
+
+    <a href="{% url 'cart_detail' %}">Back to Cart</a>
+
+{% endblock content %}

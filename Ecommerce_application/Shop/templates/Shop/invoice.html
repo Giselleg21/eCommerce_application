@@ -1,0 +1,27 @@
+{% extends 'Shop/base.html' %}
+
+{% block header %}
+    Invoice
+{% endblock header %}
+
+{% block content %}
+    <p><strong>Order number:</strong> {{ order.id }}</p>
+    <p><strong>Date:</strong> {{ order.created_at }}</p>
+    <p><strong>Customer:</strong> {{ order.user.username }}</p>
+
+    <h2>Items</h2>
+
+    <ul>
+        {% for item in order_items %}
+            <li>
+                {{ item.product.name }}
+                - Quantity: {{ item.quantity }}
+                - Price: R{{ item.price }}
+                - Subtotal: R{% widthratio item.price 1 item.quantity %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Total: R{{ order.total }}</h2>
+
+{% endblock content %}

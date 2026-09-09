@@ -1,0 +1,27 @@
+{% extends 'Shop/base.html' %}
+
+{% block header %}
+    Stores
+{% endblock header %}
+
+{% block content %}
+    {% if stores %}
+        <ul>
+            {% for store in stores %}
+                <li class="store">
+                    <a href="{% url 'store_detail' store.id %}">
+                        {{ store.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        
+    {% else %}
+        <p>No stores are currently available.</p>
+    {% endif %}
+
+    <a href="{% url 'store_create' %}">
+    <button type="button" class="btn-primary">Add Store</button>
+    </a>
+
+{% endblock content %}

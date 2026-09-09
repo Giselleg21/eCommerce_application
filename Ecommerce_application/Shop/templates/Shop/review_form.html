@@ -1,0 +1,24 @@
+{% extends 'Shop/base.html' %}
+
+{% block title %}
+    Review Form
+{% endblock title %}
+
+{% block content %}
+    <h1>Review {{ product.name }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'product_detail' product.id %}">
+        Back to Product
+    </a>
+
+{% endblock content %}

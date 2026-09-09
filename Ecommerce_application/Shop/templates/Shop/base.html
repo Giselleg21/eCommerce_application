@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width", initial-scale="1.0" />
+
+        <title>
+            {% block title %}
+                Shop
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet" href="{% static 'Shop/style.css' %}?v=26" />
+    </head>
+    <body>
+        <header>
+            <h1>
+                {% block header %}
+                    Shop
+                {% endblock header %}
+            </h1>
+            <!-- Add navigation links or other header content here-->
+        </header>
+        <main>
+            {% block content %}
+            {% endblock content %}
+        </main>
+        <footer>
+            <!-- Add content here -->
+        </footer>
+    </body>
+</html>

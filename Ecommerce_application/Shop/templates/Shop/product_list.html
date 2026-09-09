@@ -1,0 +1,25 @@
+{% extends 'Shop/base.html' %}
+
+{% block header %}
+    Products
+{% endblock header %}
+
+{% block content %}
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li style="padding: 30px">
+                    <a href="{% url 'product_detail' product.id %}">
+                        {{ product.name }}
+                    </a>
+
+                    - R{{ product.price }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products are currently available.</p>
+    {% endif %}
+
+{% endblock content %}
+

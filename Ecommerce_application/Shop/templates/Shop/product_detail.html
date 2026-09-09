@@ -1,0 +1,80 @@
+{% extends 'Shop/base.html' %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock title %}
+
+{% block content %}
+
+    <h1>{{ product.name }}</h1>
+
+    <p><strong>Price:</strong> R{{ product.price }}</p>
+
+    <p><strong>Description:</strong></p>
+    <p>{{ product.description }}</p>
+
+    <p><strong>Store:</strong> {{ product.store.name }}</p>
+
+    <form method="POST" action="{% url 'add_to_cart' product.id %}" style="padding: 10px">
+        {% csrf_token %}
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" value="1" min="1">
+
+        <button type="submit" class="btn-secondary">Add to Cart</button>
+    </form>
+
+    <div class="container-fluid">
+        <div class="row1">
+            <div class="col-md-6">
+                <h2>Reviews</h2>
+
+                {% if reviews %}
+                    {% for review in reviews %}
+                        <div>
+                            <p><strong>Rating:</strong> {{ review.rating }}/5</p>
+                            <p><strong>Review:</strong> {{ review.comment }}</p>
+                            <p>
+                                <strong>Reviewer:</strong> {{ review.user.username }}
+                            </p>
+
+                            {% if review.verified %}
+                                <p><strong>Verified Purchase</strong></p>
+                            {% else %}
+                                <p><strong>Unverified Review</strong></p>
+                            {% endif %}
+                        </div>
+
+                        <hr>
+                    {% endfor %}
+                {% else %}
+                    <p>No reviews yet.</p>
+                {% endif %}
+
+                <a href="{% url 'review_create' product.id %}">
+                    Leave a Review
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <a href="{% url 'product_list' %}">
+        Back to Products
+    </a>
+
+    <br><br>
+
+    {% if user.groups.all.0.name == "Vendor" %}
+    <a href="{% url 'product_update' product.id %}">
+        Edit Product
+    </a>
+    <br><br>
+
+    <a href="{% url 'product_delete' product.id %}">
+        Delete Product
+    </a>
+{% endif %}
+
+{% endblock content %}
+

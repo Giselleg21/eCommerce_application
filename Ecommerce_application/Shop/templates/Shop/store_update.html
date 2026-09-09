@@ -1,0 +1,23 @@
+{% extends 'Shop/base.html' %}
+
+{% block header %}
+    Edit Store
+{% endblock header %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn-secondary">Save Changes</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'store_list' %}">
+        Cancel
+    </a>
+
+{% endblock content %}
+
