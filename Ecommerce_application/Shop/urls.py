@@ -1,8 +1,10 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='Shop/home.html'), name='home'),
     path('login/',views.CustomLoginView.as_view(template_name='Shop/login.html'),name='login'),
     path('register/', views.register, name='register'),
     path('products/', views.product_list, name='product_list'),
@@ -14,7 +16,7 @@ urlpatterns = [
     path('product/<int:product_id>/edit', views.product_update, name='product_update'),
     path('store/new', views.store_create, name='store_create'),
     path('store/<int:store_id>/delete/', views.store_delete, name='store_delete'),
-    path('store/<int:store_id>/edit', views.store_update, name='store.update'),
+    path('store/<int:store_id>/edit', views.store_update, name='store_update'),
     path('cart/', views.cart_detail, name='cart_detail'),
     path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),

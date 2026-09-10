@@ -35,6 +35,8 @@
     <br><br>
 
     <a href="{% url 'store_list' %}">Back to Stores</a>
+
+    <a href="{% url 'store_update' store.id %}">Edit Store</a>
     
     <a href="{% url 'store_delete' store.id %}">Delete Store</a>
 </form>

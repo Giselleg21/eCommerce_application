@@ -7,6 +7,7 @@ from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
 from django.contrib.auth.models import Group
 
+
 def register(request):
     '''Register a new user as a Buyer or Vendor.'''
 
@@ -200,8 +201,8 @@ def store_update(request, store_id):
 
     if request.method == 'POST':
         form = StoreForm(request.POST, instance=store)
-
         if form.is_valid():
+            store = form.save(commit=False)
             form.save()
             return redirect('store_list')
 
