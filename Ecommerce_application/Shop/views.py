@@ -5,6 +5,12 @@ from .forms import StoreForm, ProductForm, ReviewForm, RegistrationForm
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
 from django.contrib.auth.models import Group
+from .functions.reddit import get_reddit_posts
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import StoreSerializer, ProductSerializer, ReviewSerializer
 
 
 def register(request):
@@ -401,3 +407,119 @@ def remove_from_cart(request, product_id):
     request.session.modified = True
 
     return redirect('cart_detail')
+
+
+def reddit_feed(request):
+    # Call our helper function to fetch posts
+    posts = get_reddit_posts("python")
+
+    # Pass the posts into the template
+    return render(request, "Shop/reddit_feed.html", {"posts": posts})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def api_create_store(request):
+    """Allow an authenticated vendor to create a store."""
+
+    if not is_vendor(request.user):
+        return Response(
+            {'error': 'Only vendors can create stores.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    serializer = StoreSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save(vendor=request.user)
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST
+    )
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def api_create_product(request):
+    """Allow an authenticated vendor to add a product to their store."""
+
+    if not is_vendor(request.user):
+        return Response(
+            {'error': 'Only vendors can create products.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    serializer = ProductSerializer(data=request.data)
+
+    if serializer.is_valid():
+        store = serializer.validated_data['store']
+
+        if store.vendor != request.user:
+            return Response(
+                {'error': 'You can only add products to your own stores.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        serializer.save()
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED
+        )
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST
+    )
+
+
+@api_view(['GET'])
+def api_store_list(request):
+    """Return all stores."""
+
+    stores = Store.objects.all()
+    serializer = StoreSerializer(stores, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def api_store_products(request, store_id):
+    """Return all products belonging to a store."""
+
+    store = get_object_or_404(Store, id=store_id)
+    products = Product.objects.filter(store=store)
+
+    serializer = ProductSerializer(products, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def api_store_reviews(request, store_id):
+    """Allow an authenticated vendor to retrieve reviews for their store."""
+
+    if not is_vendor(request.user):
+        return Response(
+            {'error': 'Only vendors can retrieve reviews.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    store = get_object_or_404(
+        Store,
+        id=store_id,
+        vendor=request.user
+    )
+
+    reviews = Review.objects.filter(
+        product__store=store
+    )
+
+    serializer = ReviewSerializer(reviews, many=True)
+
+    return Response(serializer.data)

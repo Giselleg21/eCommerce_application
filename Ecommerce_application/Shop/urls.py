@@ -57,4 +57,17 @@ urlpatterns = [
         ),
         name='password_reset_complete'
     ),
+    path("reddit/", views.reddit_feed, name="reddit_feed"),
+    path('api/stores/create/', views.api_create_store,
+         name='api_create_store'),
+    path('api/products/create/', views.api_create_product,
+         name='api_create_product'),
+    path('api/stores/', views.api_store_list,
+         name='api_store_list'),
+    path('api/stores/<int:store_id>/products/',
+            views.api_store_products,
+            name='api_store_products'),
+    path('api/stores/<int:store_id>/reviews/',
+            views.api_store_reviews,
+            name='api_store_reviews'),
     ]
