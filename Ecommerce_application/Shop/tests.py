@@ -8,7 +8,8 @@ from django.urls import reverse
 from .models import Order, OrderItem, Product, Review, Store
 
 
-@override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
+@override_settings(
+    EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
 class ShopTests(TestCase):
     """Unit tests for the main e-commerce application functionality."""
 

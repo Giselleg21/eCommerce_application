@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Store(models.Model):
     '''Model representing a store created by a Vendor
-    
+
     Fields:
     - ID: Unique integer used to identify the store.
     - Store Name: Unique string used to identify the store.
@@ -16,6 +16,7 @@ class Store(models.Model):
     description = models.TextField(max_length=100)
     vendor = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
 class Product(models.Model):
     '''
     Model representing a product available for sale.
@@ -24,7 +25,7 @@ class Product(models.Model):
     - ID: Unique integer used for the system to identify the product.
     - Product Name: Unique String used for users to identify the product.
     - Price: Price of the product
-    - Description: Unique description of the prodict. 
+    - Description: Unique description of the prodict.
     - Store: The store to which the product belongs.
     '''
 
@@ -65,6 +66,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     total = models.DecimalField(max_digits=8, decimal_places=2)
 
+
 class OrderItem(models.Model):
     '''
     Model representing a product purchased in an order.
@@ -74,6 +76,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=8, decimal_places=2)
+
 
 class Review(models.Model):
     '''

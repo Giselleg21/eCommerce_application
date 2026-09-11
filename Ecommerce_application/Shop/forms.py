@@ -1,4 +1,4 @@
-from django import forms 
+from django import forms
 from .models import Product, Store, Review
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -22,11 +22,13 @@ class RegistrationForm(UserCreationForm):
             'role'
         ]
 
+
 class ProductForm(forms.ModelForm):
     '''The submitted format for products.'''
     class Meta:
         model = Product
         fields = ["name", "price", "description"]
+
 
 class StoreForm(forms.ModelForm):
     '''The submitted format for Stores.'''
@@ -34,8 +36,8 @@ class StoreForm(forms.ModelForm):
         model = Store
         fields = ["name", "description"]
 
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['rating', 'comment']
-

@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product, Store, Cart, CartItem, Order, OrderItem, Review
+from .models import Product, Store, Order, OrderItem, Review
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import StoreForm, ProductForm, ReviewForm, RegistrationForm
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
 from django.contrib.auth.models import Group
@@ -18,7 +17,7 @@ def register(request):
             user = form.save()
 
             role = form.cleaned_data['role']
-            group = Group.objects.get(name=role)
+            group, created = Group.objects.get_or_create(name=role)
             user.groups.add(group)
 
             return redirect('login')
@@ -184,7 +183,7 @@ def store_delete(request, store_id):
         store.delete()
         return redirect('store_list')
 
-    return render(request, 'Shop/store_confirm_delete.html',{
+    return render(request, 'Shop/store_confirm_delete.html', {
         'store': store
     })
 
@@ -218,8 +217,6 @@ def store_update(request, store_id):
 @login_required
 def add_to_cart(request, product_id):
     '''Add a product to the user's session cart.'''
-
-    product = get_object_or_404(Product, id=product_id)
 
     cart = request.session.get('cart', {})
 
@@ -260,26 +257,6 @@ def cart_detail(request):
     )
 
     return render(request, 'Shop/cart.html', {
-        'cart_items': cart_items,
-        'total': total
-    })
-
-
-@login_required
-def checkout(request):
-    '''Display the checkout page.'''
-
-    cart, created = Cart.objects.get_or_create(user=request.user)
-
-    cart_items = CartItem.objects.filter(cart=cart)
-
-    total = sum(
-        item.product.price * item.quantity
-        for item in cart_items
-    )
-
-    return render(request, 'Shop/checkout.html', {
-        'cart': cart,
         'cart_items': cart_items,
         'total': total
     })
