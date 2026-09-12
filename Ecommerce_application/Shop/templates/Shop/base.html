@@ -11,7 +11,7 @@
                 Shop
             {% endblock title %}
         </title>
-        <link rel="stylesheet" href="{% static 'Shop/style.css' %}?v=26" />
+        <link rel="stylesheet" href="{% static 'Shop/style.css' %}?v=27" />
     </head>
     <body>
         <header>
@@ -20,8 +20,10 @@
                     Shop
                 {% endblock header %}
             </h1>
-            <!-- Add navigation links or other header content here-->
         </header>
+        {% block navbar_block %}
+            {% include 'Shop/navbar.html' %}
+        {% endblock navbar_block %}
         <main>
             {% block content %}
             {% endblock content %}

@@ -2,12 +2,14 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', TemplateView.as_view(
         template_name='Shop/home.html'), name='home'),
     path('login/', views.CustomLoginView.as_view(
         template_name='Shop/login.html'), name='login'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('register/', views.register, name='register'),
     path('products/', views.product_list, name='product_list'),
     path('stores/', views.store_list, name='store_list'),

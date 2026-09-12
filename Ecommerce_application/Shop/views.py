@@ -13,6 +13,10 @@ from rest_framework import status
 from .serializers import StoreSerializer, ProductSerializer, ReviewSerializer
 
 
+def home(request):
+    return render(request, 'home.html')
+
+
 def register(request):
     '''Register a new user as a Buyer or Vendor.'''
 

@@ -1,0 +1,9 @@
+<!-- templates/navbar.html -->
+<nav class="navbar">
+    <!-- Django URL tags point to the 'name' parameter in your urls.py -->
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'product_list' %}">Browse Products</a>
+    <a href="{% url 'store_list' %}">Browse Stores</a>
+    <a href="{% url 'cart_detail' %}">My Cart</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</nav>

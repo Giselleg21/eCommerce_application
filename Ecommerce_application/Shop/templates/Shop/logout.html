@@ -1,0 +1,17 @@
+{% extends Shop/base.html %}
+
+{% block header %}
+    Log out 
+{% endblock header %}
+
+{% block content %}
+
+    <h1>Logout</h1>
+
+    <p>Would you like to log out?</p>
+    <form method="POST">
+        {% csrf_token %}
+
+        <button type="submit" class="btn-secondary" style="padding:10px">Yes, log out</button>
+    </form>
+{% endblock content %}
