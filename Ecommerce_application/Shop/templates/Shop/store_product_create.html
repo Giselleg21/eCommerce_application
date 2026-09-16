@@ -1,0 +1,27 @@
+{% extends 'Shop/base.html' %}
+
+{% block content %}
+
+    <h1>Add New Product</h1>
+
+    <p>Adding a product to: <strong>{{ store.name }}</strong></p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        {{ form.errors }}
+        <br>
+        
+        <button type="submit" class="btn-secondary">
+            Create Product
+        </button>
+    </form>
+
+    <br><br>
+
+    <a href="{% url 'store_detail' store.id %}">
+        Back to Store
+    </a>
+
+{% endblock content %}

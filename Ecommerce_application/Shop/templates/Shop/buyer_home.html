@@ -1,0 +1,11 @@
+{% extends 'Shop/base.html' %}
+
+{% block content %}
+<h1>Welcome Shopper!</h1>
+
+<a href="{% url 'product_list' %}">Browse Products</a>
+
+<br><br>
+
+<a href="{% url 'store_list' %}">Browse Stores</a>
+{% endblock content %}
