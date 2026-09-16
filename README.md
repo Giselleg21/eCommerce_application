@@ -161,3 +161,6 @@ Ecommerce_Project/
 ```
 
 > **Note:** The exact files and folders may vary depending on the implementation of the application.
+=======
+# eCommerce_application
+
